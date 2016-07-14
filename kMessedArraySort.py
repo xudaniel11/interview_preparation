@@ -20,14 +20,14 @@ def kMessedArraySort(arr, k):
         return arr
     n = len(arr)
     heap = Heap()
-    heap.buildHeap(arr[:k])
+    heap.buildHeap(arr[:k+1])
     arr[0] = heap.extractMin()
-    lastInsert = 1
-    for i in range(1, n - k + 1):
-        heap.insert(arr[i + k - 1])
+    for i in range(1, n - k):
+        heap.insert(arr[i + k])
         indexOfElemToSwap = arr.index(heap.extractMin())
         arr[i], arr[indexOfElemToSwap] = arr[indexOfElemToSwap], arr[i]
-        lastInsert += 1
+
+    lastInsert = n - k
     while heap.size > 0:
         arr[lastInsert] = heap.extractMin()
         lastInsert += 1
@@ -77,9 +77,7 @@ class Heap():
 
     def extractMin(self):
         n = self.size - 1
-        # print self.heapList
         self.heapList[0], self.heapList[n] = self.heapList[n], self.heapList[0]
-        # print self.heapList
         retval = self.heapList.pop()
         self.size -= 1
         self.bubbleDown()
