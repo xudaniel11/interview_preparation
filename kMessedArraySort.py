@@ -51,8 +51,7 @@ class Heap():
         i = size - 1
         while i > 0:
             if self.heapList[i] < self.heapList[i // 2]:
-                self.heapList[i], self.heapList[
-                    i // 2] = self.heapList[i // 2], self.heapList[i]
+                self.heapList[i], self.heapList[i // 2] = self.heapList[i // 2], self.heapList[i]
             i -= 1
 
     def bubbleDown(self):
@@ -60,9 +59,7 @@ class Heap():
         while i <= (self.size - 1) // 2:
             sc = self.smallestChild(i)
             if i == 0 and self.size > 1:
-                if self.heapList[0] > self.heapList[1]:
-                    self.heapList[0], self.heapList[
-                        1] = self.heapList[1], self.heapList[0]
+                self.heapList[0], self.heapList[1] = self.heapList[1], self.heapList[0]
             elif self.heapList[i] > self.heapList[sc]:
                 self.heapList[i], self.heapList[
                     sc] = self.heapList[sc], self.heapList[i]
