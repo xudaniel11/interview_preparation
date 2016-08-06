@@ -112,7 +112,7 @@ class AsanaTaskDate:
 
       n -= 1
 
-  def incrementNextDayOfWeek(self, n):
+  def incrementWeeks(self, n):
     while n > 0:
       self.incrementDays(7)
       n -= 1
@@ -123,14 +123,13 @@ class AsanaTaskCalendar:
 
   def getRecurringTaskDates(self, firstDate, k, daysOfTheWeek, n):
     startDateList = self.findStartDates(firstDate, daysOfTheWeek)
-    taskDateList = [date.toString() for date in startDateList]
-
-    currDateList = startDateList
+    taskDateList = []
     count = 0
+
     while count < n:
-      self.incrementDates(currDateList, k)
-      taskDateList.extend([date.toString() for date in currDateList])
-      count += len(currDateList)
+      taskDateList.extend([date.toString() for date in startDateList])
+      self.incrementDates(startDateList, k)
+      count += len(startDateList)
 
     print taskDateList[:n]
 
@@ -150,8 +149,8 @@ class AsanaTaskCalendar:
 
   def incrementDates(self, currDateList, k):
     for date in currDateList:
-      date.incrementNextDayOfWeek(k)
+      date.incrementWeeks(k)
 
 d1 = AsanaTaskDate(3, 1, 1, 2015)
 atc = AsanaTaskCalendar(d1)
-atc.getRecurringTaskDates(d1, 2, [0,3], 4)
+atc.getRecurringTaskDates(d1, 2, [0,3], 100000)
