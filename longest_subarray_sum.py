@@ -1,7 +1,7 @@
 """
 Find the longest contiguous subarray that sums up to k.
 
-Current solution is the naive one: get all the different combinations of lists that sum up to k and then add the longest one.
+Current solution is the naive one: get all the different combinations of lists that sum up to k and then return the longest one.
 O(N^2) 
 
 Is there a faster solution?
