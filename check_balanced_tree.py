@@ -31,7 +31,7 @@ class BinaryTreeNode():
 		self.right = None
 
 class Test_Balanced_Tree(unittest.TestCase):
-	def case_1(self):
+	def test_case_1(self):
 		root = BinaryTreeNode('A')
 		root.left = BinaryTreeNode('B')
 		root.right = BinaryTreeNode('C')
@@ -42,12 +42,12 @@ class Test_Balanced_Tree(unittest.TestCase):
 		result = check_balanced_tree(root)
 		self.assertEqual(result, True)
 
-	def case_2(self):
+	def test_case_2(self):
 		root = BinaryTreeNode('A')
 		root.left = BinaryTreeNode('B')
 		root.right = BinaryTreeNode('C')
 		root.right.left = BinaryTreeNode('F')
-		root.right.right = BinaryTreeNode('G')
+		root.right.left.left = BinaryTreeNode('G')
 		result = check_balanced_tree(root)
 		self.assertEqual(result, False)
 

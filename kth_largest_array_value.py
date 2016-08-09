@@ -34,26 +34,26 @@ def kth_largest_array_value(arr, k):
 			heap.insert(arr[i])
 	return heap.peek_root()
 
-class TestTreeTraversals(unittest.TestCase):
-	def case_1(self):
+class TestKthLargest(unittest.TestCase):
+	def test_case_1(self):
 		arr = [3,4,1,2,6]
-		result = kth_largest_array_value(arr, k)
-		assertEqual(result, 3)
+		result = kth_largest_array_value(arr, 2)
+		self.assertEqual(result, 3)
 
-	def case_2(self):
+	def test_case_2(self):
 		arr = [5,3,9,1]
 		result = kth_largest_array_value(arr, 2)
-		assertEqual(result, 2)
+		self.assertEqual(result, 9)
 
-	def null_case1(self):
+	def test_null_case1(self):
 		arr = []
 		result = kth_largest_array_value(arr, 1)
-		assertEqual(result, None)
+		self.assertEqual(result, None)
 
-	def case_3(self):
+	def test_case_3(self):
 		arr = [1,1,1,1,1]
 		result = kth_largest_array_value(arr, 2)
-		assertEqual(result, 1)
+		self.assertEqual(result, 1)
 
 if __name__ == '__main__':
 	unittest.main()
