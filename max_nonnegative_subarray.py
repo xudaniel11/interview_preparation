@@ -11,32 +11,28 @@ import unittest
 
 def max_nonnegative_subarray(arr):
     N = len(arr)
+    max_so_far = 0
     curr_sum = 0
-    max_sum = 0
-    start, end = 0, 0
-    start_max, end_max = -1, -1
-    possibilities = []
-
+    startmax = 0
+    endmax = 0
+    start = 0
+    end = 0
     while end < N:
         if arr[end] >= 0:
             curr_sum += arr[end]
-            if curr_sum > max_sum:
-                max_sum = curr_sum
-                start_max = start
-                end_max = end + 1
-            elif curr_sum == max_sum:
-                if end + 1 - start > end_max - start_max:
-                    start_max = start
-                    end_max = end + 1
+            if curr_sum > max_so_far:
+                max_so_far = curr_sum
+                startmax = start
+                endmax = end + 1
+            elif curr_sum == max_so_far:
+                if end - start > endmax - startmax:
+                    startmax = start
+                    endmax = end + 1
         else:
-            start = end + 1
             curr_sum = 0
+            start = end + 1
         end += 1
-
-    if start_max == -1 or end_max == -1:
-        return []
-    else:
-        return arr[start_max:end_max]
+    return arr[startmax:endmax]
 
 
 class TestMaxNonNegSubarray(unittest.TestCase):
