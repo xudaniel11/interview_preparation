@@ -12,7 +12,7 @@ import unittest
 import itertools as it
 
 
-def largest_number_WRONG_SOLUTION(arr):  # takes waaaay too long
+def largest_number_WRONG_SOLUTION(arr):  # takes waaaay too long: O(len(arr)!)
     max_so_far = -999999
     for tup in it.permutations(arr, len(arr)):
         permutation = int(''.join(str(num) for num in tup))
@@ -51,18 +51,21 @@ def largest_number(arr):
 class TestLargestNumber(unittest.TestCase):
 
     def test_1(self):
+        print "aoiwejf"
         a = [3, 30, 34, 5, 9]
         answer = '9534330'
         result = largest_number(a)
         self.assertEqual(answer, result)
 
     def test_2(self):
+        print "aoijw"
         a = [472, 663, 964, 722, 485, 852, 635, 4, 368, 676, 319, 412]
         answer = '9648527226766636354854724412368319'
         result = largest_number(a)
         self.assertEqual(answer, result)
 
     def test_3(self):
+        print "aoiwejf"
         a = [0, 0, 0, 0, 0]
         answer = '0'
         result = largest_number(a)

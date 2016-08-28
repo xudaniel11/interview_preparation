@@ -21,7 +21,7 @@ If a < c OR a==c AND b < d.
 For the optimal solution, for every number up to n,
 check if i and n-i is prime. 
 
-O(N * 2(sqrt(N))
+O(N * ?)
 """
 import math
 import unittest
