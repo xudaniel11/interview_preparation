@@ -46,6 +46,8 @@ if N = 7,
 all primes till 7 = {2, 3, 5, 7}
 
 Make sure the returned array is sorted.
+
+Run time is O(n log(log n)) but idk why  ¯\_(ツ)_/¯
 """
 
 
