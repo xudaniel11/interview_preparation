@@ -47,22 +47,15 @@ def find_in_right_subtree(node):
 
 
 def find_deepest_ancestor(root, curr):
-    successor = curr.parent
-    while successor:
-        if successor.left == curr:
-            return successor
-        else:
-            successor = successor.parent
-
-    # successor = None
-    # ancestor = root
-    # while ancestor != curr:
-    #     if curr.value < ancestor.value:
-    #         successor = ancestor
-    #         ancestor = ancestor.left
-    #     else:
-    #         ancestor = ancestor.right
-    # return successor
+    parent = curr.parent
+    ancestor = curr
+    while parent:
+        if parent.right == ancestor:
+            ancestor = parent
+            parent = parent.parent
+        elif parent.left == ancestor:
+            return parent
+    return ancestor
 
 
 class TestInorderSuccessor(unittest.TestCase):
@@ -99,9 +92,34 @@ class TestInorderSuccessor(unittest.TestCase):
         f.parent = d
         g.parent = e
 
-        # self.assertEqual(inorder_sucessor(a, 6), d)
-        # self.assertEqual(inorder_sucessor(a, 10), g)
-        # self.assertEqual(inorder_sucessor(a, 12), a)
+        self.assertEqual(inorder_sucessor(a, 6), d)
+        self.assertEqual(inorder_sucessor(a, 10), g)
+        self.assertEqual(inorder_sucessor(a, 12), a)
+
+    def test_2(self):
+        a = BinarySearchTreeNode(6)
+        b = BinarySearchTreeNode(3)
+        c = BinarySearchTreeNode(10)
+        d = BinarySearchTreeNode(4)
+        e = BinarySearchTreeNode(5)
+        f = BinarySearchTreeNode(3.5)
+        g = BinarySearchTreeNode(4.5)
+
+        a.left = b
+        a.right = c
+        b.parent = a
+        c.parent = a
+        b.right = d
+        d.parent = b
+        d.left = f
+        d.right = e
+        e.parent = d
+        f.parent = d
+        e.left = g
+        g.parent = e
+
+        self.assertEqual(inorder_sucessor(a, 6), c)
+        self.assertEqual(inorder_sucessor(a, 5), a)
 
 if __name__ == "__main__":
     unittest.main()
