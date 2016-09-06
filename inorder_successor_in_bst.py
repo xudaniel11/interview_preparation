@@ -55,7 +55,7 @@ def find_deepest_ancestor(root, curr):
             parent = parent.parent
         elif parent.left == ancestor:
             return parent
-    return ancestor
+    return ancestor if parent else None
 
 
 class TestInorderSuccessor(unittest.TestCase):
@@ -120,6 +120,7 @@ class TestInorderSuccessor(unittest.TestCase):
 
         self.assertEqual(inorder_sucessor(a, 6), c)
         self.assertEqual(inorder_sucessor(a, 5), a)
+        self.assertEqual(inorder_sucessor(a, 10), None)
 
 if __name__ == "__main__":
     unittest.main()
