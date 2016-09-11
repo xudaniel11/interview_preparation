@@ -98,21 +98,29 @@ class HashMap():
 
     def __init__(self, size):
         """ Returns an instance of a HashMap with size number of buckets. """
+        if size <= 0:
+            raise ValueError(
+                "A HashMap can only be instantiated with size >= 1.")
+
         self.num_buckets = size
-        self.array = [Singly_LL()] * self.num_buckets
+        self.array = [None] * self.num_buckets
         self.capacity = 0
-        self.load_factor = .70
-        self.threshold = (self.load_factor * self.num_buckets)
+        self.threshold = (.70 * self.num_buckets)
 
     def set(self, key, value):
-        if self.capacity >= self.threshold:
-            # redistribute all existing entries
+        if self.load() >= self.threshold:
+            # resize and redistribute all existing entries
             return False
         """ Returns a boolean value indicating success/failure of the operation. """
         hash_code = hash(key)
         hashed_index = hash_code & self.num_buckets - 1
-        ll = self.array[hashed_index]
-        ll.add(key, value)
+        if self.array[hashed_index]:
+            ll = self.array[hashed_index]
+            ll.add(key, value)
+        else:
+            ll = Singly_LL()
+            self.array[hashed_index] = ll
+            ll.add(key, value)
         self.capacity += 1
         return True
 
@@ -120,28 +128,49 @@ class HashMap():
         """ Return the value associated with the given key, or null if no value is set. """
         hash_code = hash(key)
         hashed_index = hash_code & self.num_buckets - 1
-        ll = self.array[hashed_index]
-        return ll.get(key)
+        if self.array[hashed_index]:
+            ll = self.array[hashed_index]
+            return ll.get(key)
+        else:
+            return None
 
     def delete(self, key):
         """ Delete the value associated with the given key,
         returning the value on success or null if the key has no value. """
         hash_code = hash(key)
         hashed_index = hash_code & self.num_buckets - 1
-        ll = self.array[hashed_index]
-        return ll.remove(key)
+        if self.array[hashed_index]:
+            ll = self.array[hashed_index]
+            result = ll.remove(key)
+            if result:
+                self.capacity -= 1
+                return result
+        return None
 
     def load(self):
         """ Returns a float value representing the load factor. """
-        return float(self.capacity / self.threshold)
+        return float(self.capacity) / self.num_buckets
 
 
 # class TestHashMap(unittest.TestCase):
 
 #     def test_1(self):
-#         hashmap = HashMap(5)
-#         hashmap.set('a', 1)
+#         print a.set(3, 5)
+# a = HashMap(5)
+# print a.get(3)
+# print a.delete(3)
+# print a.get(3)
+# print a.set(1, 2)
+# print a.set(6, 7)
+# print a.set(8, 9)
+# print a.set(10, 11)
+# print a.set(12, 13)
+# print a.delete(6)
+# print a.delete(10)
+# print a.delete(50)
+# print a.load()
+
 #         self.assertEqual(hashmap.get('a'), 1)
 
-if __name__ == "__main__":
-    unittest.main()
+# if __name__ == "__main__":
+#     unittest.main()
