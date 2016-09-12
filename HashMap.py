@@ -1,5 +1,20 @@
 import unittest
 
+"""
+HashMap Implementation
+
+This HashMap is internally represented as an array of linked lists. It
+takes in a size parameter for the number of buckets. It's default 
+threshold is 70%. Once its capacity reaches the threshold, the hashmap
+resizes and redistributes its values.
+
+@author: Jasmine Lee
+
+Example:
+    Run tests using:
+        $ python HashMap.py
+"""
+
 
 class Singly_LL_Node():
 
@@ -45,11 +60,11 @@ class Singly_LL():
     def remove(self, key):
         """
         Args:
-            key (str): The key for the node to be removed. 
+            key (str): The key for the node to be removed.
 
         Returns:
-            val (obj): The key's value if the key we wanted was found. Value if success,
-            None otherwise.
+            val (obj): The key's value if the requested key was found.
+            Returns the key's value if success, None otherwise.
         """
         curr = self.head
         prev = None
@@ -79,8 +94,8 @@ class Singly_LL():
             key (str): The key for the node to be queried.
 
         Returns:
-            val (obj): The key's value if the key we wanted was found. Value if success,
-            None otherwise.            
+            val (obj): The key's value if the key we wanted was found. Value if 
+            success, None otherwise.
         """
         curr = self.head
         while curr:
@@ -92,8 +107,7 @@ class Singly_LL():
 
     def print_LL(self):
         """
-        Prints a linked list, node by node on the same line.
-        Use for debugging. 
+        Prints a linked list, node by node on the same line. Use for debugging.
         """
         curr = self.head
         while curr:
@@ -111,7 +125,7 @@ class Singly_LL():
 class HashMap():
 
     def __init__(self, size):
-        """ 
+        """
         Args:
             size (int): The number of buckets for the HashMap's internal array.
 
@@ -128,14 +142,20 @@ class HashMap():
         self.threshold = .70
 
     def set(self, key, value):
-        """ 
+        """
         Args:
             key (str): The key we want to set.
             value (obj): The value we want to set for the associated key.
 
         Returns:
             bool: True if successful operation, False otherwise.
+
+        Notes:
+            * A key cannot be null but its value can.
         """
+        if key == None:
+            return False
+
         self.capacity += 1
         if self.load() >= self.threshold:
             # resize and redistribute all existing entries
@@ -171,13 +191,16 @@ class HashMap():
         return True
 
     def get(self, key):
-        """ 
+        """
         Args:
-            key (str): The key we use to find the value we want. 
+            key (str): The key we use to find the value we want.
 
         Returns:
             val (obj): The value if it is found. Returns None otherwise.
         """
+        if key == None:
+            return None
+
         hash_code = hash(key)
         hashed_index = hash_code & self.num_buckets - 1
         if self.array[hashed_index]:
@@ -187,12 +210,12 @@ class HashMap():
             return None
 
     def delete(self, key):
-        """ 
-        Args: 
+        """
+        Args:
             key (str): The key we use to delete the value we want.
 
         Returns:
-            val (obj): The value if we found and deleted it successfully. 
+            val (obj): The value if we found and deleted it successfully.
             None if otherwise.
         """
         hash_code = hash(key)
@@ -206,9 +229,9 @@ class HashMap():
         return None
 
     def load(self):
-        """ 
+        """
         Returns:
-            load (float): a float value representing the load factor. 
+            load (float): a float value representing the load factor.
         """
         return float(self.capacity) / self.num_buckets
 
@@ -250,10 +273,22 @@ class TestHashMap(unittest.TestCase):
         self.assertEqual(example.delete('10'), 11)
         self.assertEqual(example.delete('10'), None)
 
-    def test_get(self):
-        example = HashMap(2**20)
-        example.set('hi', 'yo')
-        self.assertEqual(example.load(), 1.0 / 2**20)
+    def test_null(self):
+        example = HashMap(3)
+        example.set('hi', None)
+        self.assertEqual(example.get('hi'), None)
+        self.assertEqual(example.set(None, 5), False)
+        self.assertEqual(example.get(None), None)
+
+    """Commented out because this test takes ~12s to run."""
+    # def test_get(self):
+    #     size = 2**20
+    #     example = HashMap(size)
+    #     for i in range(1, size + 1):
+    #         example.set(i, "hi" + str(i))
+    #     self.assertEqual(example.get(size), "hi1048576")
+    #     self.assertEqual(example.get(2**10), "hi1024")
+    #     self.assertEqual(example.get(size + 10), None)
 
 if __name__ == "__main__":
     unittest.main()
