@@ -18,7 +18,7 @@ class Stack():
         return len(self.ls) == 0
 
     def peek(self):
-        return self.ls[-1]
+        return self.ls[-1] if len(self.ls) > 0 else None
 
     def size(self):
         return len(self.ls)

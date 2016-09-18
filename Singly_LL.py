@@ -76,6 +76,7 @@ class Singly_LL():
         Prints a linked list, node by node on the same line.
         """
         curr = self.head
+        result = []
         while curr:
             print curr.val,
             curr = curr.next
@@ -87,18 +88,19 @@ class Singly_LL():
         return self.size
 
 
-exampleLL = Singly_LL()
-exampleLL.add(1)
-exampleLL.add(1)
-exampleLL.add(2)
-exampleLL.add(3)
-exampleLL.add(1)
-exampleLL.add(1)
-exampleLL.add(4)
-exampleLL.add(1)
-exampleLL.add(1)
-exampleLL.print_LL()
-print "\n"
+def test():
+    exampleLL = Singly_LL()
+    exampleLL.add(1)
+    exampleLL.add(1)
+    exampleLL.add(2)
+    exampleLL.add(3)
+    exampleLL.add(1)
+    exampleLL.add(1)
+    exampleLL.add(4)
+    exampleLL.add(1)
+    exampleLL.add(1)
+    exampleLL.print_LL()
+    print "\n"
 
-exampleLL.remove(1)
-exampleLL.print_LL()
+    exampleLL.remove(1)
+    exampleLL.print_LL()

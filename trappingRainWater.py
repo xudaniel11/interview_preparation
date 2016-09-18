@@ -27,7 +27,33 @@ def trappingRainWater(arr):
         result += minValue - height
     return result
 
+"""O(N^2) solution"""
+
+
+def trapping_rain_water(arr):
+    result = 0
+    if len(arr) <= 2:
+        return result
+    for i, bar_height in enumerate(arr):
+        if i == 0:
+            left = 0
+            right = max(arr[i + 1:])
+        elif i == len(arr) - 1:
+            right = 0
+            left = max(arr[:i])
+        else:
+            right = max(arr[i + 1:])
+            left = max(arr[:i])
+        height = min(left, right)
+        tmp = height - bar_height if height >= bar_height else 0
+        # print tmp
+        result += tmp
+    return result
+
+
 a0 = [2, 1, 4, 3, 1, 0, 3]
-print "should be 6: is {}".format(trappingRainWater(a0))
+print "should be 6: is {}".format(trapping_rain_water(a0))
 a1 = [3, 0, 0, 2, 0, 4]
-print "should be 10: is {}".format(trappingRainWater(a1))
+print "should be 10: is {}".format(trapping_rain_water(a1))
+a2 = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
+print "should be 6: is {}".format(trapping_rain_water(a2))

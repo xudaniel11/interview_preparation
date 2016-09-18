@@ -44,6 +44,7 @@ def substrings_from_word(word, dt):
 print palindrome_pairs(["mat", "tam", "bat"])
 print palindrome_pairs(["bag", "gab", "ab", "bbbbag"])
 print palindrome_pairs(["mms", "sssmm"])
+print palindrome_pairs(["abcd", "dcba", "lls", "s", "sssll"])
 
 
 """
