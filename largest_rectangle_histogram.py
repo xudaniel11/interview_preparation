@@ -25,41 +25,46 @@ def naive_largest_rectangle(histogram):
 def largest_rectangle(histogram):
     stack = [0]
     max_area = -1
-    for i in range(len(histogram)):
+    for i in range(1, len(histogram)):
         if not stack or histogram[i] >= histogram[stack[-1]]:
             stack.append(i)
         elif histogram[i] < histogram[stack[-1]]:
             top = 0
-            while stack and histogram[i] < histogram:
+            while stack and histogram[i] < histogram[stack[-1]]:
                 top = stack.pop()
                 if not stack:
                     area = histogram[top] * i
                 else:
                     area = histogram[top] * (i - stack[-1] - 1)
                 max_area = max(max_area, area)
-                top = stack.pop()
+            stack.append(i)
 
+    while stack:
+        top = stack.pop()
+        area = histogram[top] * (len(histogram) - top)
+        print histogram[top], len(histogram), top
+        max_area = max(max_area, area)
     return max_area
 
 
 class TestLargestRectangle(unittest.TestCase):
 
     # def test_1(self):
-        # a = [90, 58, 69, 70, 82, 100, 13, 57, 47, 18]
-        # result = largest_rectangle(a)
-        # expected = 348
-        # self.assertEqual(result, expected)
-
-    def test_2(self):
-        a = [1, 2, 4, 2, 1, 3]
-        result = largest_rectangle(a)
-        expected = 6
-        self.assertEqual(result, expected)
-
-    # def test_3(self):
-    #     a = [2, 2, 2, 6, 1, 5, 4, 2, 2, 2, 2]
+    #     a = [90, 58, 69, 70, 82, 100, 13, 57, 47, 18]
     #     result = largest_rectangle(a)
-    #     expected = 12
+    #     expected = 348
     #     self.assertEqual(result, expected)
+
+    # def test_2(self):
+    #     a = [1, 2, 4, 2, 1, 3]
+    #     result = largest_rectangle(a)
+    #     expected = 6
+    #     self.assertEqual(result, expected)
+
+    def test_3(self):
+        a = [2, 2, 2, 6, 1, 5, 4, 2, 2, 2]
+        result = largest_rectangle(a)
+        expected = 10
+        self.assertEqual(result, expected)
 if __name__ == "__main__":
     unittest.main()
