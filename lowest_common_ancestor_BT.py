@@ -1,19 +1,19 @@
 """
-Design an algorithm and write code to find the first common ancestor (meaning high up in the tree)
+Design an algorithm and write code to find the lowest common ancestor (meaning low in the tree)
 of two nodes in a binary tree. Avoid storing additional nodes in a data structure. NOTE:
 This is not necessarily a binary search tree.
 """
 import unittest
 
 
-def first_common_ancestor(root, p, q):
+def lowest_common_ancestor(root, p, q):
     if not found(root, p) or not found(root, q):
         return None
     else:
-        return find_first_common_ancestor(root, p, q)
+        return find_lowest_common_ancestor(root, p, q)
 
 
-def find_first_common_ancestor(root, p, q):
+def find_lowest_common_ancestor(root, p, q):
     if root == p and root == q:
         return root
     left_found_p = found(root.left, p)
@@ -23,7 +23,7 @@ def find_first_common_ancestor(root, p, q):
         return root
 
     child_side = root.left if left_found_q else root.right
-    return find_first_common_ancestor(child_side, p, q)
+    return find_lowest_common_ancestor(child_side, p, q)
 
 
 def found(root, node):
@@ -53,7 +53,7 @@ class TestFirstCommonAncestor(unittest.TestCase):
         root.right.right = BinaryTreeNode('G')
         root.left.left = BinaryTreeNode('D')
         root.left.right = BinaryTreeNode('E')
-        result = first_common_ancestor(
+        result = lowest_common_ancestor(
             root, root.left.left, root.right.right)
         expected = root
         self.assertEqual(result, expected)
@@ -66,7 +66,7 @@ class TestFirstCommonAncestor(unittest.TestCase):
         root.right.right = BinaryTreeNode('G')
         root.left.left = BinaryTreeNode('D')
         root.left.right = BinaryTreeNode('E')
-        result = first_common_ancestor(
+        result = lowest_common_ancestor(
             root, root.left.left, root.left.right)
         expected = root.left
         self.assertEqual(result, expected)
@@ -80,7 +80,7 @@ class TestFirstCommonAncestor(unittest.TestCase):
         root.left.left = BinaryTreeNode('D')
         root.left.right = BinaryTreeNode('E')
         other_tree_root = BinaryTreeNode('other')
-        result = first_common_ancestor(
+        result = lowest_common_ancestor(
             root, root.left.left, other_tree_root)
         expected = None
         self.assertEqual(result, expected)
@@ -94,7 +94,7 @@ class TestFirstCommonAncestor(unittest.TestCase):
         root.left.left = BinaryTreeNode('D')
         root.left.right = BinaryTreeNode('E')
         other_tree_root = BinaryTreeNode('other')
-        result = first_common_ancestor(
+        result = lowest_common_ancestor(
             root, root.left.left, other_tree_root)
         expected = None
         self.assertEqual(result, expected)
