@@ -1,6 +1,6 @@
 """
-Design an algorithm and write code to find the first common ancestor of two
-nodes in a binary tree. Avoid storing additional nodes in a data structure. NOTE:
+Design an algorithm and write code to find the first common ancestor (meaning high up in the tree)
+of two nodes in a binary tree. Avoid storing additional nodes in a data structure. NOTE:
 This is not necessarily a binary search tree.
 """
 import unittest
@@ -22,7 +22,7 @@ def find_first_common_ancestor(root, p, q):
     if left_found_p != left_found_q:
         return root
 
-    child_side = left_found_q ? root.left else root.right
+    child_side = root.left if left_found_q else root.right
     return find_first_common_ancestor(child_side, p, q)
 
 
@@ -41,3 +41,63 @@ class BinaryTreeNode():
         self.val = val
         self.left = None
         self.right = None
+
+
+class TestFirstCommonAncestor(unittest.TestCase):
+
+    def test_1(self):
+        root = BinaryTreeNode('A')
+        root.left = BinaryTreeNode('B')
+        root.right = BinaryTreeNode('C')
+        root.right.left = BinaryTreeNode('F')
+        root.right.right = BinaryTreeNode('G')
+        root.left.left = BinaryTreeNode('D')
+        root.left.right = BinaryTreeNode('E')
+        result = first_common_ancestor(
+            root, root.left.left, root.right.right)
+        expected = root
+        self.assertEqual(result, expected)
+
+    def test_2(self):
+        root = BinaryTreeNode('A')
+        root.left = BinaryTreeNode('B')
+        root.right = BinaryTreeNode('C')
+        root.right.left = BinaryTreeNode('F')
+        root.right.right = BinaryTreeNode('G')
+        root.left.left = BinaryTreeNode('D')
+        root.left.right = BinaryTreeNode('E')
+        result = first_common_ancestor(
+            root, root.left.left, root.left.right)
+        expected = root.left
+        self.assertEqual(result, expected)
+
+    def test_3(self):
+        root = BinaryTreeNode('A')
+        root.left = BinaryTreeNode('B')
+        root.right = BinaryTreeNode('C')
+        root.right.left = BinaryTreeNode('F')
+        root.right.right = BinaryTreeNode('G')
+        root.left.left = BinaryTreeNode('D')
+        root.left.right = BinaryTreeNode('E')
+        other_tree_root = BinaryTreeNode('other')
+        result = first_common_ancestor(
+            root, root.left.left, other_tree_root)
+        expected = None
+        self.assertEqual(result, expected)
+
+    def test_3(self):
+        root = BinaryTreeNode('A')
+        root.left = BinaryTreeNode('B')
+        root.right = BinaryTreeNode('C')
+        root.right.left = BinaryTreeNode('F')
+        root.right.right = BinaryTreeNode('G')
+        root.left.left = BinaryTreeNode('D')
+        root.left.right = BinaryTreeNode('E')
+        other_tree_root = BinaryTreeNode('other')
+        result = first_common_ancestor(
+            root, root.left.left, other_tree_root)
+        expected = None
+        self.assertEqual(result, expected)
+
+if __name__ == '__main__':
+    unittest.main()
