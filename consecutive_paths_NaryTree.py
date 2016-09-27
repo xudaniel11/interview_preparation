@@ -19,16 +19,12 @@ def get_consecutive_paths(node, path, level):
         return
     path[level] = node.data
 
-    for i in reversed(range(level + 1)):
-        if len(filter(lambda x: x is not None, path)) == 1 or i == 0:
+    for i in reversed(range(1, level + 1)):
+        if path[i] != path[i - 1] + 1:
             break
         else:
-            print path, path[i]
-            if path[i] != path[i - 1] + 1:
-                break
-            else:
-                print_path(path, i - 1, level)
-    return map(lambda x: get_consecutive_paths(x, path, level + 1), node.children)
+            print_path(path, i - 1, level)
+    map(lambda x: get_consecutive_paths(x, path, level + 1), node.children)
 
 
 def print_path(path, start, end):
@@ -68,7 +64,8 @@ class TestConsecutivePaths(unittest.TestCase):
         eight = NaryTreeNode(8)
         three = NaryTreeNode(3)
         five.children.extend([six, seven, one])
-        six.children.extend([two, seven2, eight])
+        six.children.extend([two, seven2])
+        seven2.add_child(eight)
         one.add_child(three)
         find_consecutive_paths(five)
 
